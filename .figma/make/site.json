@@ -1,0 +1,10 @@
+{
+  "description": "Streamline intervention management for GeoTech with a centralized platform for planners and technicians, enhancing scheduling efficiency and real-time updates.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

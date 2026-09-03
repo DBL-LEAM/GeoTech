@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ *
+ * Design tokens — GeoTech Interventions
+ * ------------------------------------------------------------------ */
+@theme {
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Surfaces */
+  --color-canvas: #0a0d13;
+  --color-surface: #10141c;
+  --color-elevated: #161c26;
+  --color-sunken: #070a0f;
+
+  /* Lines */
+  --color-line: #1e2531;
+  --color-line-strong: #2b3444;
+
+  /* Text */
+  --color-ink: #e8ecf4;
+  --color-ink-soft: #aab3c4;
+  --color-ink-muted: #78829a;
+  --color-ink-faint: #545d72;
+
+  /* Brand & semantics */
+  --color-brand: #f97316;
+  --color-brand-bright: #fb923c;
+  --color-info: #38bdf8;
+  --color-ok: #22c55e;
+  --color-warn: #eab308;
+  --color-danger: #ef4444;
+
+  --radius-card: 0.75rem;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-raised: 0 12px 32px -12px rgb(0 0 0 / 0.65);
+  --shadow-phone: 0 40px 90px -30px rgb(0 0 0 / 0.85), 0 0 0 1px rgb(255 255 255 / 0.04);
+
+  --animate-rise: rise 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade: fade 0.25s ease both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.82); }
+}
+
+/* ------------------------------------------------------------------ *
+ * Base
+ * ------------------------------------------------------------------ */
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-brand) 35%, transparent);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--color-brand) 70%, transparent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+  }
+
+  /* Native date/time pickers on a dark surface */
+  input[type='date'],
+  input[type='time'] {
+    color-scheme: dark;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Components
+ * ------------------------------------------------------------------ */
+@layer components {
+  .surface-grid {
+    background-image:
+      radial-gradient(90rem 40rem at 68% -18%, rgb(249 115 22 / 0.07), transparent 62%),
+      radial-gradient(70rem 34rem at 8% 108%, rgb(56 189 248 / 0.05), transparent 60%);
+  }
+
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-hover {
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  }
+  .card-hover:hover {
+    border-color: var(--color-line-strong);
+    box-shadow: var(--shadow-raised);
+  }
+
+  .field {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-line);
+    background-color: var(--color-sunken);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.35rem;
+    color: var(--color-ink);
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+  .field::placeholder {
+    color: var(--color-ink-faint);
+  }
+  .field:hover {
+    border-color: var(--color-line-strong);
+  }
+  .field:focus {
+    outline: none;
+    border-color: color-mix(in oklab, var(--color-brand) 55%, transparent);
+    background-color: color-mix(in oklab, var(--color-brand) 4%, var(--color-sunken));
+  }
+
+  .label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .live-dot {
+    animation: pulse-dot 2.4s ease-in-out infinite;
+  }
+
+  .scroll-slim {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line-strong) transparent;
+  }
+  .scroll-slim::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scroll-slim::-webkit-scrollbar-thumb {
+    background-color: var(--color-line-strong);
+    border-radius: 999px;
+  }
+  .scroll-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
